@@ -2,24 +2,35 @@ import os
 import random
 
 # Define colors
+# It is possible that for different Operating Systems different methods are needed for colors. This method should be supported by Linux.
 class bcolors:
     OKGREEN = '\033[92m'
     OKYELLOW = '\033[33m'
     ENDC = '\033[0m'
 
 def print_wordles(correct_word, tried_combinations, allowed_guesses):
+    # go through all possible allowed guesses
     for i in range(0,allowed_guesses):
+        # if i is larger than the length of tried combinations, we print underscores for left guesses; otherwise we will print the letters with colors.
         if i >= len(tried_combinations):
             print("_ _ _ _ _")
         else:
+            # this will collect the different letters with its colors 
             output_word = ""
+            
+            # go through all letters of a guess
             for x in range(0,5):
+                # first check if letter is at correct place
                 if correct_word[x] == tried_combinations[i][x]:
                     output_word += bcolors.OKGREEN + tried_combinations[i][x] + bcolors.ENDC + " "
+                # second check if letter is in word but at wrong place
                 elif tried_combinations[i][x] in correct_word:
                     output_word += bcolors.OKYELLOW + tried_combinations[i][x] + bcolors.ENDC + " "
+                # third add letter if not in word
                 else:
                     output_word += tried_combinations[i][x] + " "
+            
+            # print collected letters
             print(output_word)
     print("\n#################")
     
